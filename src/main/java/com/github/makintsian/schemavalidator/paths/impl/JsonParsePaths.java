@@ -1,61 +1,60 @@
-package com.github.makintsian.schemavalidator;
+package com.github.makintsian.schemavalidator.paths.impl;
 
+import com.github.makintsian.schemavalidator.exceptions.SchemaValidatorException;
+import com.github.makintsian.schemavalidator.paths.ParsePaths;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.commons.io.IOUtils;
 
-import java.io.FileReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JsonParsePaths {
+public class JsonParsePaths implements ParsePaths {
 
-    private List<String> paths;
-    private List<String> fullPaths;
+    private final List<String> paths;
+
+    public JsonParsePaths(InputStream inputStream) {
+        this.paths = new ArrayList<>();
+        parseJson(inputStream);
+    }
 
     public JsonParsePaths(String json) {
         this.paths = new ArrayList<>();
-        this.fullPaths = new ArrayList<>();
         parseJson(json);
     }
 
     public JsonParsePaths(FileReader fileReader) {
         this.paths = new ArrayList<>();
-        this.fullPaths = new ArrayList<>();
         parseJson(fileReader);
-    }
-
-    private String jsonPathsToStr() {
-        StringBuilder stringBuilder = new StringBuilder();
-        removeDuplicates(paths).forEach(path -> {
-            if (stringBuilder.length() != 0) stringBuilder.append(", ");
-            stringBuilder.append(path);
-        });
-        return stringBuilder.toString();
-    }
-
-    /**
-     * @return String with json paths
-     */
-    public String getJsonPathsStr() {
-        return jsonPathsToStr();
     }
 
     /**
      * @return List with json paths
      */
-    public List<String> getJsonPathsList() {
+    public List<String> getPathsList() {
         return removeDuplicates(paths);
     }
 
     /**
-     * @return List with full json paths
+     * @param inputStream InputStream
      */
-    public List<String> getJsonFullPathsList() {
-        return fullPaths;
+    private void parseJson(InputStream inputStream) {
+        String text;
+        try {
+            text = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
+        } catch (IOException ex) {
+            throw new SchemaValidatorException("Json is not valid", ex);
+        }
+        JsonElement jsonTree = JsonParser.parseString(text);
+        if (!jsonTree.isJsonObject() && !jsonTree.isJsonArray())
+            throw new SchemaValidatorException("Json is not valid");
+        writeAndSortJson(jsonTree);
     }
 
     /**
@@ -83,9 +82,7 @@ public class JsonParsePaths {
      */
     private void writeAndSortJson(JsonElement jsonTree) {
         writeJsonPaths(jsonTree, "");
-        writeFullJsonPaths(jsonTree, "");
         Collections.sort(paths);
-        Collections.sort(fullPaths);
     }
 
     /**
@@ -112,36 +109,6 @@ public class JsonParsePaths {
             else jsonArray.forEach(e -> {
                 if (e.isJsonArray() || e.isJsonObject()) writeJsonPaths(e, path + "[*]");
                 else paths.add(path + "[*]");
-            });
-        }
-    }
-
-    /**
-     * @param elem JsonElement
-     * @param path current json path
-     */
-    private void writeFullJsonPaths(JsonElement elem, String path) {
-        if (elem.isJsonObject()) {
-            JsonObject jsonObject = elem.getAsJsonObject();
-            jsonObject.keySet().forEach(s -> {
-                JsonElement jsonElement = jsonObject.get(s);
-                if (jsonElement.isJsonPrimitive() || jsonElement.isJsonNull()
-                        || (jsonElement.isJsonObject() && jsonElement.getAsJsonObject().keySet().isEmpty())) {
-                    if (path.isEmpty()) fullPaths.add(path + s);
-                    else fullPaths.add(path + "." + s);
-                } else {
-                    if (path.isEmpty()) writeFullJsonPaths(jsonElement, path + s);
-                    else writeFullJsonPaths(jsonElement, path + "." + s);
-                }
-            });
-        } else if (elem.isJsonArray()) {
-            final int[] number = {0};
-            JsonArray jsonArray = elem.getAsJsonArray();
-            if (jsonArray.size() == 0) fullPaths.add(path + "[]");
-            else jsonArray.forEach(e -> {
-                if (e.isJsonArray() || e.isJsonObject()) writeFullJsonPaths(e, path + "[" + number[0] + "]");
-                else fullPaths.add(path + "[" + number[0] + "]");
-                number[0]++;
             });
         }
     }

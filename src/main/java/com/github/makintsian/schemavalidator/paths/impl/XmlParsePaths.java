@@ -1,5 +1,7 @@
-package com.github.makintsian.schemavalidator;
+package com.github.makintsian.schemavalidator.paths.impl;
 
+import com.github.makintsian.schemavalidator.exceptions.SchemaValidatorException;
+import com.github.makintsian.schemavalidator.paths.ParsePaths;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -11,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class XmlParsePaths {
+public class XmlParsePaths implements ParsePaths {
 
     private final List<String> paths;
 
@@ -23,7 +25,7 @@ public class XmlParsePaths {
     /**
      * @return List with xml paths
      */
-    public List<String> getXmlPathsList() {
+    public List<String> getPathsList() {
         return removeDuplicates(paths);
     }
 
@@ -36,7 +38,7 @@ public class XmlParsePaths {
         try {
             document = xmlReader.read(inputStream);
         } catch (DocumentException ex) {
-            throw new SchemaValidatorException("File is not valid", ex);
+            throw new SchemaValidatorException("Xml is not valid", ex);
         }
         writeAndSortXml(document.getRootElement());
     }
