@@ -1,12 +1,13 @@
 package com.github.makintsian.validator;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.makintsian.paths.ParsePaths;
 import com.github.makintsian.exceptions.SchemaValidatorException;
 import com.github.makintsian.paths.impl.JsonParsePaths;
 import com.github.makintsian.paths.impl.XmlParsePaths;
+import com.github.makintsian.utils.YamlReader;
 import org.apache.commons.collections4.MapUtils;
 import org.junit.jupiter.api.Assertions;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 import java.util.List;
@@ -27,19 +28,22 @@ public class SchemaValidator {
 
     public class Builder {
 
-        private final Yaml yaml;
+        private final YamlReader yamlReader;
+        private final TypeReference<Map<String, List<String>>> typeRef;
 
         private Builder() {
-            this.yaml = new Yaml();
+            this.yamlReader = new YamlReader();
+            this.typeRef = new TypeReference<>() {
+            };
         }
 
         public SchemaValidator.Builder withSchema(InputStream file) {
-            SchemaValidator.this.schema = yaml.load(file);
+            SchemaValidator.this.schema = yamlReader.readFile(file, typeRef);
             return this;
         }
 
         public SchemaValidator.Builder withSchema(String file) {
-            SchemaValidator.this.schema = yaml.load(file);
+            SchemaValidator.this.schema = yamlReader.readFile(file, typeRef);
             return this;
         }
 
