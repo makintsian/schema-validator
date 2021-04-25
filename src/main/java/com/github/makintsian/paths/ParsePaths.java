@@ -1,4 +1,4 @@
-package com.github.makintsian.schemavalidator.paths;
+package com.github.makintsian.paths;
 
 import java.util.List;
 

@@ -1,0 +1,17 @@
+json:
+  - 'firstName'
+  - 'lastName'
+  - 'age'
+  - 'address.streetAddress'
+  - 'address.city'
+  - 'address.postalCode'
+  - 'devices[*]'
+  - 'tax'
+  - 'languages[*]'
+  - 'phoneNumbers[*].type'
+  - 'phoneNumbers[*].number'
+xml:
+  - 'breakfast_menu/food/name'
+  - 'breakfast_menu/food/price'
+  - 'breakfast_menu/food/description'
+  - 'breakfast_menu/food/calories'

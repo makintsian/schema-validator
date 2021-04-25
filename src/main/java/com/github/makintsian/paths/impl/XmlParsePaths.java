@@ -1,13 +1,15 @@
-package com.github.makintsian.schemavalidator.paths.impl;
+package com.github.makintsian.paths.impl;
 
-import com.github.makintsian.schemavalidator.exceptions.SchemaValidatorException;
-import com.github.makintsian.schemavalidator.paths.ParsePaths;
+import com.github.makintsian.paths.ParsePaths;
+import com.github.makintsian.exceptions.SchemaValidatorException;
+import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +22,11 @@ public class XmlParsePaths implements ParsePaths {
     public XmlParsePaths(InputStream inputStream) {
         this.paths = new ArrayList<>();
         parseXml(inputStream);
+    }
+
+    public XmlParsePaths(String xml) {
+        this.paths = new ArrayList<>();
+        parseXml(IOUtils.toInputStream(xml, StandardCharsets.UTF_8));
     }
 
     /**

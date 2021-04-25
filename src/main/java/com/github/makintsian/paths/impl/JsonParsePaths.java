@@ -1,7 +1,7 @@
-package com.github.makintsian.schemavalidator.paths.impl;
+package com.github.makintsian.paths.impl;
 
-import com.github.makintsian.schemavalidator.exceptions.SchemaValidatorException;
-import com.github.makintsian.schemavalidator.paths.ParsePaths;
+import com.github.makintsian.exceptions.SchemaValidatorException;
+import com.github.makintsian.paths.ParsePaths;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,17 +21,18 @@ public class JsonParsePaths implements ParsePaths {
 
     public JsonParsePaths(InputStream inputStream) {
         this.paths = new ArrayList<>();
-        parseJson(inputStream);
+        String json;
+        try {
+            json = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
+        } catch (IOException ex) {
+            throw new SchemaValidatorException("Cannot convert to string", ex);
+        }
+        parseJson(json);
     }
 
     public JsonParsePaths(String json) {
         this.paths = new ArrayList<>();
         parseJson(json);
-    }
-
-    public JsonParsePaths(FileReader fileReader) {
-        this.paths = new ArrayList<>();
-        parseJson(fileReader);
     }
 
     /**
@@ -42,38 +43,12 @@ public class JsonParsePaths implements ParsePaths {
     }
 
     /**
-     * @param inputStream InputStream
-     */
-    private void parseJson(InputStream inputStream) {
-        String text;
-        try {
-            text = IOUtils.toString(inputStream, StandardCharsets.UTF_8.name());
-        } catch (IOException ex) {
-            throw new SchemaValidatorException("Json is not valid", ex);
-        }
-        JsonElement jsonTree = JsonParser.parseString(text);
-        if (!jsonTree.isJsonObject() && !jsonTree.isJsonArray())
-            throw new SchemaValidatorException("Json is not valid");
-        writeAndSortJson(jsonTree);
-    }
-
-    /**
      * @param json String
      */
     private void parseJson(String json) {
         JsonElement jsonTree = JsonParser.parseString(json);
         if (!jsonTree.isJsonObject() && !jsonTree.isJsonArray())
             throw new SchemaValidatorException("Json is not valid");
-        writeAndSortJson(jsonTree);
-    }
-
-    /**
-     * @param fileReader FileReader
-     */
-    private void parseJson(FileReader fileReader) {
-        JsonElement jsonTree = JsonParser.parseReader(fileReader);
-        if (!jsonTree.isJsonObject() && !jsonTree.isJsonArray())
-            throw new SchemaValidatorException("File is not valid");
         writeAndSortJson(jsonTree);
     }
 
