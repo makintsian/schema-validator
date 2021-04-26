@@ -1,6 +1,8 @@
 # schema-validator
 
 [![Build Status](https://travis-ci.org/makintsian/schema-validator.svg?branch=master)](https://travis-ci.org/makintsian/schema-validator)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.makintsian/schema-validator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.makintsian/schema-validator/)
+[![GitHub release](https://img.shields.io/github/release/makintsian/schema-validator.svg)](https://github.com/makintsian/schema-validator/releases)
 
 _Validates json and xml paths_
 
