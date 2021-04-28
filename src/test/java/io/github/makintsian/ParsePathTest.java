@@ -1,8 +1,8 @@
-package com.github.makintsian;
+package io.github.makintsian;
 
-import com.github.makintsian.paths.ParsePaths;
-import com.github.makintsian.paths.impl.XmlParsePaths;
-import com.github.makintsian.paths.impl.JsonParsePaths;
+import io.github.makintsian.paths.ParsePaths;
+import io.github.makintsian.paths.impl.XmlParsePaths;
+import io.github.makintsian.paths.impl.JsonParsePaths;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

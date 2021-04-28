@@ -4,7 +4,7 @@ plugins {
     id 'signing'
 }
 
-group 'com.github.makintsian'
+group 'io.github.makintsian'
 version '0.0.1'
 
 archivesBaseName = "schema-validator"
