@@ -1,7 +1,7 @@
-package com.github.makintsian.paths.impl;
+package io.github.makintsian.paths.impl;
 
-import com.github.makintsian.exceptions.SchemaValidatorException;
-import com.github.makintsian.paths.ParsePaths;
+import io.github.makintsian.exceptions.SchemaValidatorException;
+import io.github.makintsian.paths.ParsePaths;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

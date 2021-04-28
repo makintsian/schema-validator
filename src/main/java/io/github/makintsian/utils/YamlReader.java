@@ -1,9 +1,9 @@
-package com.github.makintsian.utils;
+package io.github.makintsian.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.makintsian.exceptions.SchemaValidatorException;
+import io.github.makintsian.exceptions.SchemaValidatorException;
 
 import java.io.IOException;
 import java.io.InputStream;

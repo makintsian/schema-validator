@@ -1,6 +1,8 @@
 # schema-validator
 
 [![Build Status](https://travis-ci.org/makintsian/schema-validator.svg?branch=master)](https://travis-ci.org/makintsian/schema-validator)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.makintsian/schema-validator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.makintsian/schema-validator/)
+[![GitHub release](https://img.shields.io/github/release/makintsian/schema-validator.svg)](https://github.com/makintsian/schema-validator/releases)
 
 _Validates json and xml paths_
 
@@ -9,6 +11,7 @@ _Validates json and xml paths_
 ## Example
 
 ### Files .json and .xml
+
 ```
 {
   "firstName": "John",
@@ -37,13 +40,14 @@ _Validates json and xml paths_
     <food>
         <name>Belgian Waffles</name>
         <price>$5.95</price>
-        <description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>
+        <description>Two of our famous Belgian Waffles</description>
         <calories>650</calories>
     </food>
 </breakfast_menu>
 ```
 
 ### Schema .yaml
+
 ```
 json_schema:
   - 'firstName'
@@ -62,6 +66,7 @@ xml_schema:
 ```
 
 ### Parse json and xml
+
 ```
 ParsePaths parsePaths = new JsonParsePaths(${json});
 List<String> paths = parsePaths.getPathsList();
@@ -73,6 +78,7 @@ List<String> paths = parsePaths.getPathsList();
 ```
 
 ### Validate json and xml
+
 ```
 SchemaValidator schemaValidator = SchemaValidator.newBuilder()
                 .withSchema(${schema})

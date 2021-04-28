@@ -1,4 +1,4 @@
-package com.github.makintsian.exceptions;
+package io.github.makintsian.exceptions;
 
 public class SchemaValidatorException extends RuntimeException {
 

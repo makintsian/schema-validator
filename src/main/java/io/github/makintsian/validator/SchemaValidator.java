@@ -1,11 +1,11 @@
-package com.github.makintsian.validator;
+package io.github.makintsian.validator;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.makintsian.paths.ParsePaths;
-import com.github.makintsian.exceptions.SchemaValidatorException;
-import com.github.makintsian.paths.impl.JsonParsePaths;
-import com.github.makintsian.paths.impl.XmlParsePaths;
-import com.github.makintsian.utils.YamlReader;
+import io.github.makintsian.paths.ParsePaths;
+import io.github.makintsian.exceptions.SchemaValidatorException;
+import io.github.makintsian.paths.impl.JsonParsePaths;
+import io.github.makintsian.paths.impl.XmlParsePaths;
+import io.github.makintsian.utils.YamlReader;
 import org.apache.commons.collections4.MapUtils;
 import org.junit.jupiter.api.Assertions;
 

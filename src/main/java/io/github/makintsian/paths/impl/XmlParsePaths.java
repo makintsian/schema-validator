@@ -1,7 +1,7 @@
-package com.github.makintsian.paths.impl;
+package io.github.makintsian.paths.impl;
 
-import com.github.makintsian.paths.ParsePaths;
-import com.github.makintsian.exceptions.SchemaValidatorException;
+import io.github.makintsian.paths.ParsePaths;
+import io.github.makintsian.exceptions.SchemaValidatorException;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

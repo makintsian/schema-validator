@@ -1,6 +1,6 @@
-package com.github.makintsian;
+package io.github.makintsian;
 
-import com.github.makintsian.validator.SchemaValidator;
+import io.github.makintsian.validator.SchemaValidator;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 

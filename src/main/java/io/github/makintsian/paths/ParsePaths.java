@@ -1,4 +1,4 @@
-package com.github.makintsian.paths;
+package io.github.makintsian.paths;
 
 import java.util.List;
 

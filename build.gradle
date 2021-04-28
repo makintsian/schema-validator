@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'maven'
+    id 'signing'
 }
 
-group 'com.github.makintsian'
+group 'io.github.makintsian'
 version '0.0.1'
+
+archivesBaseName = "schema-validator"
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -33,5 +37,67 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
         exceptionFormat "full"
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'SchemaValidator'
+                packaging 'jar'
+                description 'Validates json and xml paths'
+                url 'https://github.com/makintsian/schema-validator'
+
+                scm {
+                    connection 'scm:git:git://github.com/makintsian/schema-validator.git'
+                    developerConnection 'scm:git:ssh://github.com:makintsian/schema-validator.git'
+                    url 'https://github.com/makintsian/schema-validator/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'makintsian'
+                        name 'Igor Makintsian'
+                        email 'howletttest@gmail.com'
+                    }
+                }
+            }
+        }
     }
 }
