@@ -8,11 +8,25 @@ _Validates json and xml paths_
 
 ## Download
 
+### Maven
+```xml
+<dependency>
+    <groupId>io.github.makintsian</groupId>
+    <artifactId>schema-validator</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+### Gradle
+```groovy
+implementation 'io.github.makintsian:schema-validator:0.0.1'
+```
+
 ## Example
 
 ### Files .json and .xml
 
-```
+```json5
 {
   "firstName": "John",
   "lastName": "Doe",
@@ -35,7 +49,7 @@ _Validates json and xml paths_
 }
 ```
 
-```
+```xml
 <breakfast_menu>
     <food>
         <name>Belgian Waffles</name>
@@ -48,7 +62,7 @@ _Validates json and xml paths_
 
 ### Schema .yaml
 
-```
+```yaml
 json_schema:
   - 'firstName'
   - 'lastName'
@@ -67,26 +81,26 @@ xml_schema:
 
 ### Parse json and xml
 
-```
+```java
 ParsePaths parsePaths = new JsonParsePaths(${json});
 List<String> paths = parsePaths.getPathsList();
 ```
 
-```
+```java
 ParsePaths parsePaths = new XmlParsePaths(${xml});
 List<String> paths = parsePaths.getPathsList();
 ```
 
 ### Validate json and xml
 
-```
+```java
 SchemaValidator schemaValidator = SchemaValidator.newBuilder()
                 .withSchema(${schema})
                 .build();
 schemaValidator.validateJson(${json}, "json_schema");
 ```
 
-```
+```java
 SchemaValidator schemaValidator = SchemaValidator.newBuilder()
                 .withSchema(${schema})
                 .build();
